@@ -1,0 +1,57 @@
+---
+title: "BIOSTAT620 hw02"
+author: "wenfei mao"
+date: "2024-02-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+*Problem 2*
+*(a)Note that each regression model may have its own set of covariates. Report the estimates of the model parameters from the R output*
+```{r}
+library("readxl")
+data <- read_excel("C:/Users/windu/Desktop/620hw02 data source.xlsx")
+data
+```
+```{r}
+install.packages("systemfit")
+library("systemfit")
+```
+
+
+```{r}
+data$Y1_lag <- c(NA, head(data$Total.ST.min, -1))
+data$Y2_lag <- c(NA, head(data$Social.ST.min, -1))
+fit <- systemfit(list(Total.ST.min ~ Y1_lag + Xt + Zt, Social.ST.min ~ Y2_lag + Xt + Zt), data = data, method = "SUR")
+summary(fit)
+```
+
+
+
+
+
+
